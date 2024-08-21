@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <% if (typeof username !== 'undefined') { %>
+    <div>Tengo session</div>
+  <% } %>
+  <% if (typeof username === 'undefined') { %>
+    <form>
+      <label for="username">
+        username
+        <input type="text" name="username" id="username">
+      </label>
+      <label for="password">
+        password
+        <input type="password" name="password" id="password">
+      </label>
+      <button type="submit">Login</button>
+    </form>
+  <% } %>
+  <script>
+    document.addEventListener('submit', function(event) {
+      event.preventDefault()
+      var formData = new FormData(event.target)
+      var data = Object.fromEntries(formData)
+      fetch('/login', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ username: data.username, password: data.password })
+      }).then(res => {
+        if (res.ok) {
+          setTimeout(() => {
+            window.location.href = '/protected'
+          }, 2000);
+        }
+      })
+    })
+  </script>
+</body>
+</html>
