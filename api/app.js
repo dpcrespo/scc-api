@@ -25,8 +25,6 @@ export const createApp = ({ userModel }) => {
   // app.use(verifyAccessToken)
 
   app.get('/', (req, res) => {
-    console.log(req)
-    // const { user } = req.session
     res.render('index')
   })
 
